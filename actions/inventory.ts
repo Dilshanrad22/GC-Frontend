@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet, apiPost, apiPatch } from '@/lib/api';
 
@@ -8,11 +8,11 @@ export async function getInventory(page = 1, limit = 10) {
     limit: limit.toString(),
   });
 
-  return apiGet(`/inventory?${params}`);
+  return apiGet<any>(`/inventory?${params}`);
 }
 
 export async function getInventoryItem(productId: string) {
-  return apiGet(`/inventory/${productId}`);
+  return apiGet<any>(`/inventory/${productId}`);
 }
 
 export async function getStockMovements(productId: string, page = 1, limit = 10) {
@@ -21,11 +21,11 @@ export async function getStockMovements(productId: string, page = 1, limit = 10)
     limit: limit.toString(),
   });
 
-  return apiGet(`/inventory/${productId}/movements?${params}`);
+  return apiGet<any>(`/inventory/${productId}/movements?${params}`);
 }
 
 export async function getLowStockItems() {
-  return apiGet('/inventory/low-stock');
+  return apiGet<any>('/inventory/low-stock');
 }
 
 export async function setOpeningStock(
@@ -33,7 +33,7 @@ export async function setOpeningStock(
   quantity: number,
   reason?: string
 ) {
-  return apiPost(`/inventory/${productId}/opening-stock`, {
+  return apiPost<any>(`/inventory/${productId}/opening-stock`, {
     quantity,
     reason,
   });
@@ -45,7 +45,7 @@ export async function adjustStock(
   type: 'increase' | 'decrease' | 'damaged' | 'customer_return',
   reason?: string
 ) {
-  return apiPost(`/inventory/${productId}/adjust`, {
+  return apiPost<any>(`/inventory/${productId}/adjust`, {
     quantity,
     type,
     reason,

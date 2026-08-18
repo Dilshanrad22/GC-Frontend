@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet } from '@/lib/api';
 
@@ -17,7 +17,7 @@ export async function getAuditLogs(
     ...(entityType && { entityType }),
   });
 
-  return apiGet(`/audit-logs?${params}`);
+  return apiGet<any>(`/audit-logs?${params}`);
 }
 
 export async function getUserAuditLogs(userId: string, page = 1, limit = 10) {
@@ -26,7 +26,7 @@ export async function getUserAuditLogs(userId: string, page = 1, limit = 10) {
     limit: limit.toString(),
   });
 
-  return apiGet(`/audit-logs/user/${userId}?${params}`);
+  return apiGet<any>(`/audit-logs/user/${userId}?${params}`);
 }
 
 export async function getEntityAuditLogs(
@@ -40,7 +40,7 @@ export async function getEntityAuditLogs(
     limit: limit.toString(),
   });
 
-  return apiGet(
+  return apiGet<any>(
     `/audit-logs/entity/${entityType}/${entityId}?${params}`
   );
 }

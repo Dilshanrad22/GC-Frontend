@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet, apiPost, apiPatch, apiFormData } from '@/lib/api';
 
@@ -9,11 +9,11 @@ export async function getPrintingJobs(page = 1, limit = 10, status = '') {
     ...(status && { status }),
   });
 
-  return apiGet(`/printing-jobs?${params}`);
+  return apiGet<any>(`/printing-jobs?${params}`);
 }
 
 export async function getPrintingJob(id: string) {
-  return apiGet(`/printing-jobs/${id}`);
+  return apiGet<any>(`/printing-jobs/${id}`);
 }
 
 export async function createPrintingJob(data: {
@@ -23,7 +23,7 @@ export async function createPrintingJob(data: {
   expectedDeliveryDate?: string;
   quotedPrice?: number;
 }) {
-  return apiPost('/printing-jobs', data);
+  return apiPost<any>('/printing-jobs', data);
 }
 
 export async function updatePrintingJobStatus(
@@ -31,22 +31,22 @@ export async function updatePrintingJobStatus(
   status: string,
   notes?: string
 ) {
-  return apiPatch(`/printing-jobs/${id}/status`, {
+  return apiPatch<any>(`/printing-jobs/${id}/status`, {
     status,
     notes,
   });
 }
 
 export async function setFinalPrice(id: string, finalPrice: number) {
-  return apiPatch(`/printing-jobs/${id}/price`, {
+  return apiPatch<any>(`/printing-jobs/${id}/price`, {
     finalPrice,
   });
 }
 
 export async function uploadJobFile(id: string, formData: FormData) {
-  return apiFormData(`/printing-jobs/${id}/files`, formData, 'POST');
+  return apiFormData<any>(`/printing-jobs/${id}/files`, formData, 'POST');
 }
 
 export async function deleteJobFile(jobId: string, fileId: string) {
-  return apiPost(`/printing-jobs/${jobId}/files/${fileId}/delete`, {});
+  return apiPost<any>(`/printing-jobs/${jobId}/files/${fileId}/delete`, {});
 }

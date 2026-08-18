@@ -22,6 +22,9 @@ export function Navbar() {
       .find((row) => row.startsWith('user='));
     if (userCookie) {
       try {
+        // Cookie is only readable client-side; state is set post-mount by
+        // design so the server-rendered and pre-hydration markup match.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setUser(JSON.parse(decodeURIComponent(userCookie.substring(5))));
       } catch (e) {
         console.error('Failed to parse user cookie');
@@ -30,34 +33,34 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white border-b border-slate-200 px-6 py-4">
+    <nav className="bg-white/80 backdrop-blur-sm border-b border-slate-200 px-6 py-3.5 sticky top-0 z-30">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-slate-900">Admin Panel</h2>
+        <h2 className="text-sm font-semibold text-slate-900">Admin Panel</h2>
 
         <div className="relative">
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-slate-100"
+            className="flex items-center gap-3 px-2 py-1.5 rounded-lg hover:bg-slate-100 transition-colors"
           >
             <div className="text-right">
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-sm font-medium text-slate-900 leading-tight">
                 {user?.fullName || 'User'}
               </p>
-              <p className="text-xs text-slate-500">{user?.role?.name || 'User'}</p>
+              <p className="text-xs text-slate-400">{user?.role?.name || 'User'}</p>
             </div>
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white">
+            <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-sm font-semibold shadow-sm">
               {user?.fullName?.charAt(0) || 'U'}
             </div>
           </button>
 
           {showMenu && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-lg shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-10">
               <button
                 onClick={() => {
                   setShowMenu(false);
                   logoutAction();
                 }}
-                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg"
+                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
               >
                 Logout
               </button>

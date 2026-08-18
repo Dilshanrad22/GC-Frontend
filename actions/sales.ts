@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet, apiPost, apiPatch } from '@/lib/api';
 
@@ -11,11 +11,11 @@ export async function getSales(page = 1, limit = 10, status = '', dateFrom = '',
     ...(dateTo && { dateTo }),
   });
 
-  return apiGet(`/sales?${params}`);
+  return apiGet<any>(`/sales?${params}`);
 }
 
 export async function getSale(id: string) {
-  return apiGet(`/sales/${id}`);
+  return apiGet<any>(`/sales/${id}`);
 }
 
 export async function createSale(data: {
@@ -30,11 +30,11 @@ export async function createSale(data: {
   paymentMethod: string;
   notes?: string;
 }) {
-  return apiPost('/sales', data);
+  return apiPost<any>('/sales', data);
 }
 
 export async function voidSale(id: string, reason: string) {
-  return apiPost(`/sales/${id}/void`, { reason });
+  return apiPost<any>(`/sales/${id}/void`, { reason });
 }
 
 export async function returnSaleItem(
@@ -43,7 +43,7 @@ export async function returnSaleItem(
   quantity: number,
   reason: string
 ) {
-  return apiPost(`/sales/${saleId}/return`, {
+  return apiPost<any>(`/sales/${saleId}/return`, {
     itemId,
     quantity,
     reason,
@@ -51,5 +51,5 @@ export async function returnSaleItem(
 }
 
 export async function getReceipt(saleId: string) {
-  return apiGet(`/receipts/${saleId}/preview`);
+  return apiGet<any>(`/receipts/${saleId}/preview`);
 }

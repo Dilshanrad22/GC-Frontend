@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet } from '@/lib/api';
 
@@ -13,7 +13,7 @@ export async function getSalesReport(
     ...(period && { period }),
   });
 
-  return apiGet(`/reports/sales?${params}`);
+  return apiGet<any>(`/reports/sales?${params}`);
 }
 
 export async function getRevenueReport(
@@ -27,7 +27,7 @@ export async function getRevenueReport(
     ...(period && { period }),
   });
 
-  return apiGet(`/reports/revenue?${params}`);
+  return apiGet<any>(`/reports/revenue?${params}`);
 }
 
 export async function getProductSalesReport(dateFrom?: string, dateTo?: string) {
@@ -36,11 +36,11 @@ export async function getProductSalesReport(dateFrom?: string, dateTo?: string) 
     ...(dateTo && { dateTo }),
   });
 
-  return apiGet(`/reports/products?${params}`);
+  return apiGet<any>(`/reports/products?${params}`);
 }
 
 export async function getInventoryReport() {
-  return apiGet('/reports/inventory');
+  return apiGet<any>('/reports/inventory');
 }
 
 export async function getCustomerReport(dateFrom?: string, dateTo?: string) {
@@ -49,7 +49,7 @@ export async function getCustomerReport(dateFrom?: string, dateTo?: string) {
     ...(dateTo && { dateTo }),
   });
 
-  return apiGet(`/reports/customers?${params}`);
+  return apiGet<any>(`/reports/customers?${params}`);
 }
 
 export async function getPrintingJobsReport(
@@ -61,5 +61,5 @@ export async function getPrintingJobsReport(
     ...(dateTo && { dateTo }),
   });
 
-  return apiGet(`/reports/printing-jobs?${params}`);
+  return apiGet<any>(`/reports/printing-jobs?${params}`);
 }

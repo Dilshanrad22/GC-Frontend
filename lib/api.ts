@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -63,8 +63,18 @@ async function apiCall<T>(
     }
   }
 
-  const data = await response.json();
-  return data;
+  return parseApiResponse<T>(response);
+}
+
+async function parseApiResponse<T>(response: Response): Promise<ApiResponse<T>> {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    throw new Error(
+      `Expected JSON from API but got "${contentType || 'unknown content-type'}" (status ${response.status}): ${text.slice(0, 200)}`
+    );
+  }
+  return response.json();
 }
 
 export async function apiGet<T>(endpoint: string): Promise<ApiResponse<T>> {
@@ -114,6 +124,5 @@ export async function apiFormData<T>(
     body: formData,
   });
 
-  const data = await response.json();
-  return data;
+  return parseApiResponse<T>(response);
 }

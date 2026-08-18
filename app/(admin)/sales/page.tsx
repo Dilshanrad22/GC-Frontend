@@ -50,7 +50,7 @@ async function SalesPage({
                 `Rs.${sale.totalAmount}`,
                 sale.items?.length || 0,
                 new Date(sale.createdAt).toLocaleDateString(),
-                <span className="text-green-600 font-medium">Completed</span>,
+                <span key={`${sale.id}-status`} className="text-green-600 font-medium">Completed</span>,
               ])}
             />
 

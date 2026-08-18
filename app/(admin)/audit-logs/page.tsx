@@ -34,7 +34,7 @@ async function AuditLogsPage({
               ]}
               rows={logs.map((log: any) => [
                 log.user?.fullName || 'System',
-                <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                <span key={log.id} className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
                   {log.action}
                 </span>,
                 log.entityType,

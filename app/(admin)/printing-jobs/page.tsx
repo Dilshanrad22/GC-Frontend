@@ -43,7 +43,7 @@ async function PrintingJobsPage({
                 </Link>,
                 job.customer?.name || '-',
                 job.description?.substring(0, 30) + '...',
-                <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                <span key={`${job.id}-status`} className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
                   {job.currentStatus}
                 </span>,
                 new Date(job.createdAt).toLocaleDateString(),

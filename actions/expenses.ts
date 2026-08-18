@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet, apiPost, apiPatch } from '@/lib/api';
 
@@ -10,11 +10,11 @@ export async function getExpenses(page = 1, limit = 10, status = '', category = 
     ...(category && { category }),
   });
 
-  return apiGet(`/expenses?${params}`);
+  return apiGet<any>(`/expenses?${params}`);
 }
 
 export async function getExpense(id: string) {
-  return apiGet(`/expenses/${id}`);
+  return apiGet<any>(`/expenses/${id}`);
 }
 
 export async function createExpense(data: {
@@ -25,15 +25,15 @@ export async function createExpense(data: {
   attachment?: string;
   notes?: string;
 }) {
-  return apiPost('/expenses', data);
+  return apiPost<any>('/expenses', data);
 }
 
 export async function updateExpense(id: string, data: any) {
-  return apiPatch(`/expenses/${id}`, data);
+  return apiPatch<any>(`/expenses/${id}`, data);
 }
 
 export async function approveExpense(id: string) {
-  return apiPost(`/expenses/${id}/approve`, {});
+  return apiPost<any>(`/expenses/${id}/approve`, {});
 }
 
 export async function getExpensesSummary(
@@ -47,5 +47,5 @@ export async function getExpensesSummary(
     ...(category && { category }),
   });
 
-  return apiGet(`/expenses/summary?${params}`);
+  return apiGet<any>(`/expenses/summary?${params}`);
 }

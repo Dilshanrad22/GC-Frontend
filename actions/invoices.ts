@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet, apiPost, apiPatch } from '@/lib/api';
 
@@ -10,19 +10,19 @@ export async function getInvoices(page = 1, limit = 10, status = '', customerId 
     ...(customerId && { customerId }),
   });
 
-  return apiGet(`/invoices?${params}`);
+  return apiGet<any>(`/invoices?${params}`);
 }
 
 export async function getInvoice(id: string) {
-  return apiGet(`/invoices/${id}`);
+  return apiGet<any>(`/invoices/${id}`);
 }
 
 export async function getDueInvoices() {
-  return apiGet('/invoices/due');
+  return apiGet<any>('/invoices/due');
 }
 
 export async function getInvoicesByCustomer(customerId: string) {
-  return apiGet(`/invoices/customer/${customerId}`);
+  return apiGet<any>(`/invoices/customer/${customerId}`);
 }
 
 export async function recordPayment(
@@ -31,7 +31,7 @@ export async function recordPayment(
   paymentMethod: string,
   notes?: string
 ) {
-  return apiPost(`/invoices/${invoiceId}/payments`, {
+  return apiPost<any>(`/invoices/${invoiceId}/payments`, {
     amount,
     paymentMethod,
     notes,

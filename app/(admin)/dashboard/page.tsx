@@ -19,7 +19,7 @@ async function DashboardPage() {
             <div className="text-3xl font-bold text-blue-600">
               {salesReport?.data?.totalSales || 0}
             </div>
-            <p className="text-slate-600 text-sm">Today's Sales</p>
+            <p className="text-slate-600 text-sm">Today&apos;s Sales</p>
           </div>
         </Card>
 

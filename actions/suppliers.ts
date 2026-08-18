@@ -1,4 +1,4 @@
-'use server';
+﻿'use server';
 
 import { apiGet, apiPost, apiPatch } from '@/lib/api';
 
@@ -8,11 +8,11 @@ export async function getSuppliers(page = 1, limit = 10) {
     limit: limit.toString(),
   });
 
-  return apiGet(`/suppliers?${params}`);
+  return apiGet<any>(`/suppliers?${params}`);
 }
 
 export async function getSupplier(id: string) {
-  return apiGet(`/suppliers/${id}`);
+  return apiGet<any>(`/suppliers/${id}`);
 }
 
 export async function createSupplier(data: {
@@ -22,11 +22,11 @@ export async function createSupplier(data: {
   city?: string;
   address?: string;
 }) {
-  return apiPost('/suppliers', data);
+  return apiPost<any>('/suppliers', data);
 }
 
 export async function updateSupplier(id: string, data: any) {
-  return apiPatch(`/suppliers/${id}`, data);
+  return apiPatch<any>(`/suppliers/${id}`, data);
 }
 
 export async function createPurchase(data: {
@@ -39,7 +39,7 @@ export async function createPurchase(data: {
   expectedDeliveryDate?: string;
   notes?: string;
 }) {
-  return apiPost('/suppliers/purchases', data);
+  return apiPost<any>('/suppliers/purchases', data);
 }
 
 export async function getPurchases(supplierId?: string) {
@@ -47,7 +47,7 @@ export async function getPurchases(supplierId?: string) {
     ...(supplierId && { supplierId }),
   });
 
-  return apiGet(`/suppliers/purchases?${params}`);
+  return apiGet<any>(`/suppliers/purchases?${params}`);
 }
 
 export async function receivePurchaseItem(
@@ -55,7 +55,7 @@ export async function receivePurchaseItem(
   itemId: string,
   quantity: number
 ) {
-  return apiPost(
+  return apiPost<any>(
     `/suppliers/purchases/${purchaseId}/items/${itemId}/receive`,
     {
       quantity,

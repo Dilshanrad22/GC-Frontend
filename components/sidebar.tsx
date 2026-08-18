@@ -22,26 +22,35 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="bg-slate-900 text-white w-64 min-h-screen p-4">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-blue-400">GC Admin</h1>
-        <p className="text-xs text-slate-400">Printing & Retail</p>
+    <aside className="bg-white border-r border-slate-200 w-64 min-h-screen flex flex-col">
+      <div className="px-5 py-6 border-b border-slate-100">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+            GC
+          </div>
+          <div>
+            <h1 className="text-sm font-semibold text-slate-900 leading-tight">
+              GC Admin
+            </h1>
+            <p className="text-xs text-slate-400">Printing & Retail</p>
+          </div>
+        </div>
       </div>
 
-      <nav className="space-y-2">
+      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         {menuItems.map((item) => {
           const isActive = pathname.startsWith(item.href);
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`block px-4 py-2 rounded-lg transition ${
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-blue-600 text-white'
-                  : 'text-slate-300 hover:bg-slate-800'
+                  ? 'bg-blue-50 text-blue-700'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
-              <span className="mr-3">{item.icon}</span>
+              <span className="text-base leading-none">{item.icon}</span>
               {item.name}
             </Link>
           );

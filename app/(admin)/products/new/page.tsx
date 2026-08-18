@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 export default function NewProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     sku: '',
     name: '',
@@ -28,8 +28,8 @@ export default function NewProductPage() {
   useEffect(() => {
     async function loadCategories() {
       const result = await getCategories();
-      if (result?.data) {
-        setCategories(result.data);
+      if (result?.data?.data) {
+        setCategories(result.data.data);
       }
     }
     loadCategories();

@@ -19,7 +19,7 @@ async function ProductsPage({
   ]);
 
   const products = productsResponse?.data?.data || [];
-  const categories = categoriesResponse?.data || [];
+  const categories = categoriesResponse?.data?.data || [];
   const pagination = productsResponse?.data?.pagination || {};
 
   return (

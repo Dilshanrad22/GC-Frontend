@@ -26,21 +26,26 @@ export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4">
-        <div className="flex justify-between items-center px-6 py-4 border-b">
-          <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+    <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-xl border border-slate-200/80 max-w-md w-full">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100">
+          <h2 className="text-base font-semibold text-slate-900">{title}</h2>
           <button
             onClick={onClose}
-            className="text-slate-500 hover:text-slate-700 text-2xl leading-none"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors text-xl leading-none"
+            aria-label="Close"
           >
             ×
           </button>
         </div>
 
-        <div className="px-6 py-4">{children}</div>
+        <div className="px-6 py-5">{children}</div>
 
-        {footer && <div className="px-6 py-4 border-t bg-slate-50">{footer}</div>}
+        {footer && (
+          <div className="px-6 py-4 border-t border-slate-100 bg-slate-50 rounded-b-xl">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );
