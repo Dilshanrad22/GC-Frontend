@@ -51,15 +51,3 @@ export async function getCustomerReport(dateFrom?: string, dateTo?: string) {
 
   return apiGet<any>(`/reports/customers?${params}`);
 }
-
-export async function getPrintingJobsReport(
-  dateFrom?: string,
-  dateTo?: string
-) {
-  const params = new URLSearchParams({
-    ...(dateFrom && { dateFrom }),
-    ...(dateTo && { dateTo }),
-  });
-
-  return apiGet<any>(`/reports/printing-jobs?${params}`);
-}

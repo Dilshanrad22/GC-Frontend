@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,7 @@ import { createSale, getSales } from '@/actions/sales';
 import { getProducts } from '@/actions/products';
 import { getCustomers } from '@/actions/customers';
 import { useEffect } from 'react';
+import { CheckCircle2 } from 'lucide-react';
 
 interface CartItem {
   productId: string;
@@ -119,7 +120,7 @@ export default function NewSalePage() {
                 <select
                   value={selectedProduct}
                   onChange={(e) => setSelectedProduct(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Select a product</option>
                   {products.map((p) => (
@@ -193,7 +194,7 @@ export default function NewSalePage() {
                 <select
                   value={customerId}
                   onChange={(e) => setCustomerId(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Walk-in Customer</option>
                   {customers.map((c) => (
@@ -211,7 +212,7 @@ export default function NewSalePage() {
                 <select
                   value={paymentMethod}
                   onChange={(e) => setPaymentMethod(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="cash">Cash</option>
                   <option value="card">Card</option>
@@ -238,7 +239,7 @@ export default function NewSalePage() {
                 </div>
                 <div className="flex justify-between pt-2 border-t text-base font-bold">
                   <span>Total:</span>
-                  <span className="text-blue-600">Rs.{total.toFixed(2)}</span>
+                  <span className="text-purple-600">Rs.{total.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -247,7 +248,7 @@ export default function NewSalePage() {
                 disabled={loading || cart.length === 0}
                 className="w-full"
               >
-                {loading ? 'Processing...' : '✓ Complete Sale'}
+                {loading ? 'Processing...' : (<><CheckCircle2 className="w-4 h-4 inline" /> Complete Sale</>)}
               </Button>
 
               <Button

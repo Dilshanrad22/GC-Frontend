@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Table } from '@/components/ui/table';
 import { getSales } from '@/actions/sales';
 import Link from 'next/link';
+import { Plus } from 'lucide-react';
 
 async function SalesPage({
   searchParams,
@@ -22,7 +23,9 @@ async function SalesPage({
           <p className="text-slate-600">View and manage sales transactions</p>
         </div>
         <Link href="/sales/new">
-          <Button>💰 New Sale</Button>
+          <Button>
+            <Plus className="w-4 h-4" /> New Sale
+          </Button>
         </Link>
       </div>
 
@@ -42,7 +45,7 @@ async function SalesPage({
                 <Link
                   key={sale.id}
                   href={`/sales/${sale.id}`}
-                  className="text-blue-600 hover:underline font-medium"
+                  className="text-purple-600 hover:underline font-medium"
                 >
                   {sale.invoiceNumber}
                 </Link>,

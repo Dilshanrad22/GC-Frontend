@@ -19,13 +19,12 @@ export async function getProduct(id: string) {
 }
 
 export async function createProduct(data: {
-  sku: string;
   name: string;
-  description?: string;
   categoryId: string;
   unit: string;
-  buyingPrice: number;
   sellingPrice: number;
+  currentStock: number;
+  buyingPrice?: number;
   minimumStock?: number;
   barcode?: string;
   brand?: string;
@@ -35,6 +34,10 @@ export async function createProduct(data: {
 
 export async function updateProduct(id: string, data: any) {
   return apiPatch<any>(`/products/${id}`, data);
+}
+
+export async function updateProductAvailability(id: string, isAvailable: boolean) {
+  return apiPatch<any>(`/products/${id}`, { isAvailable });
 }
 
 export async function uploadProductImage(id: string, formData: FormData) {

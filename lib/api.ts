@@ -31,6 +31,7 @@ async function apiCall<T>(
   let response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers,
+    cache: 'no-store',
   });
 
   if (response.status === 401 && token) {
@@ -57,6 +58,7 @@ async function apiCall<T>(
           response = await fetch(`${API_URL}${endpoint}`, {
             ...options,
             headers,
+            cache: 'no-store',
           });
         }
       }

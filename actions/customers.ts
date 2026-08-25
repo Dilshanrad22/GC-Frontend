@@ -18,6 +18,10 @@ export async function getCustomer(id: string) {
   return apiGet<any>(`/customers/${id}`);
 }
 
+export async function getCustomerProfile(id: string) {
+  return apiGet<any>(`/customers/${id}/profile`);
+}
+
 export async function createCustomer(data: {
   name: string;
   email: string;

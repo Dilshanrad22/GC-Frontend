@@ -1,7 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { logoutAction } from '@/actions/auth';
+import { ChevronDown, LogOut } from 'lucide-react';
 
 interface User {
   id: string;
@@ -48,9 +49,10 @@ export function Navbar() {
               </p>
               <p className="text-xs text-slate-400">{user?.role?.name || 'User'}</p>
             </div>
-            <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-sm font-semibold shadow-sm">
+            <div className="w-8 h-8 rounded-full bg-linear-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-sm font-semibold shadow-sm">
               {user?.fullName?.charAt(0) || 'U'}
             </div>
+            <ChevronDown className="w-4 h-4 text-slate-400" />
           </button>
 
           {showMenu && (
@@ -60,9 +62,9 @@ export function Navbar() {
                   setShowMenu(false);
                   logoutAction();
                 }}
-                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
               >
-                Logout
+                <LogOut className="w-4 h-4" /> Logout
               </button>
             </div>
           )}

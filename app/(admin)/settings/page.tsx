@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card';
+﻿import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -49,7 +49,7 @@ export default function SettingsPage() {
             </div>
             <div className="flex justify-between items-center p-3 bg-slate-50 rounded">
               <span className="text-sm font-medium text-slate-900">Environment</span>
-              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+              <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
                 {process.env.NODE_ENV}
               </span>
             </div>

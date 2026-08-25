@@ -38,3 +38,30 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #94a3b8;
 }
+
+/* Hide native spinner arrows on number inputs across the admin panel */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Bill/receipt printing: hide the admin chrome so only the printed
+   document's own content appears on the page. Scoped to @media print so
+   normal on-screen rendering everywhere else is unaffected. */
+@media print {
+  aside,
+  nav {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+}

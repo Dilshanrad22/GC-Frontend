@@ -2,20 +2,23 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  FileText,
+  BarChart3,
+  Settings as SettingsIcon,
+  type LucideIcon,
+} from 'lucide-react';
 
-const menuItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: '📊' },
-  { name: 'Customers', href: '/customers', icon: '👥' },
-  { name: 'Products', href: '/products', icon: '📦' },
-  { name: 'Inventory', href: '/inventory', icon: '📦' },
-  { name: 'Sales', href: '/sales', icon: '💰' },
-  { name: 'Invoices', href: '/invoices', icon: '📄' },
-  { name: 'Suppliers', href: '/suppliers', icon: '🏭' },
-  { name: 'Printing Jobs', href: '/printing-jobs', icon: '🖨️' },
-  { name: 'Expenses', href: '/expenses', icon: '💸' },
-  { name: 'Reports', href: '/reports', icon: '📈' },
-  { name: 'Audit Logs', href: '/audit-logs', icon: '📋' },
-  { name: 'Settings', href: '/settings', icon: '⚙️' },
+const menuItems: { name: string; href: string; icon: LucideIcon }[] = [
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Products', href: '/products', icon: Package },
+  { name: 'Sales', href: '/sales', icon: ShoppingCart },
+  { name: 'Invoices', href: '/invoices', icon: FileText },
+  { name: 'Reports', href: '/reports', icon: BarChart3 },
+  { name: 'Settings', href: '/settings', icon: SettingsIcon },
 ];
 
 export function Sidebar() {
@@ -25,14 +28,14 @@ export function Sidebar() {
     <aside className="bg-white border-r border-slate-200 w-64 min-h-screen flex flex-col">
       <div className="px-5 py-6 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+          <div className="w-9 h-9 rounded-lg bg-linear-to-br from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
             GC
           </div>
           <div>
             <h1 className="text-sm font-semibold text-slate-900 leading-tight">
-              GC Admin
+              G.C. Print Shop
             </h1>
-            <p className="text-xs text-slate-400">Printing & Retail</p>
+            <p className="text-xs text-slate-400">Admin Panel</p>
           </div>
         </div>
       </div>
@@ -40,17 +43,18 @@ export function Sidebar() {
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         {menuItems.map((item) => {
           const isActive = pathname.startsWith(item.href);
+          const Icon = item.icon;
           return (
             <Link
               key={item.href}
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-blue-50 text-blue-700'
+                  ? 'bg-purple-50 text-purple-700'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
-              <span className="text-base leading-none">{item.icon}</span>
+              <Icon className="w-4.5 h-4.5 shrink-0" strokeWidth={2} />
               {item.name}
             </Link>
           );

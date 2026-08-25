@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Table } from '@/components/ui/table';
 import { getInvoices, getDueInvoices } from '@/actions/invoices';
 import Link from 'next/link';
+import { AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 
 async function InvoicesPage({
   searchParams,
@@ -36,7 +37,7 @@ async function InvoicesPage({
         </Link>
         <Link href="/invoices?view=due">
           <Button variant={view === 'due' ? 'primary' : 'secondary'}>
-            Due ⚠️
+            <AlertTriangle className="w-4 h-4" /> Due
           </Button>
         </Link>
       </div>
@@ -49,7 +50,7 @@ async function InvoicesPage({
               <Link
                 key={inv.id}
                 href={`/invoices/${inv.id}`}
-                className="text-blue-600 hover:underline"
+                className="text-purple-600 hover:underline"
               >
                 {inv.number}
               </Link>,
@@ -57,9 +58,13 @@ async function InvoicesPage({
               `Rs.${inv.totalAmount}`,
               `Rs.${inv.paidAmount || 0}`,
               inv.status === 'paid' ? (
-                <span className="text-green-600 font-medium">✓ Paid</span>
+                <span className="inline-flex items-center gap-1 text-green-600 font-medium">
+                  <CheckCircle2 className="w-4 h-4" /> Paid
+                </span>
               ) : inv.status === 'partial' ? (
-                <span className="text-yellow-600 font-medium">⚠️ Partial</span>
+                <span className="inline-flex items-center gap-1 text-yellow-600 font-medium">
+                  <Clock className="w-4 h-4" /> Partial
+                </span>
               ) : (
                 <span className="text-red-600 font-medium">Pending</span>
               ),

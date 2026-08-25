@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import '../globals.css';
 
 export const metadata: Metadata = {
-  title: 'GC Admin Panel',
-  description: 'Printing & Retail Business Management System',
+  title: 'G.C. Print Shop | Admin',
+  description: 'G.C. Print Shop business management system',
 };
 
 export default function RootLayout({

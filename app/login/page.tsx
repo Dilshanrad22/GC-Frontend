@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -34,11 +34,11 @@ export default function LoginPage() {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
-          <div className="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-base shadow-sm mx-auto mb-4">
+          <div className="w-11 h-11 rounded-xl bg-linear-to-br from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-base shadow-sm mx-auto mb-4">
             GC
           </div>
           <h1 className="text-xl font-semibold text-slate-900">Welcome back</h1>
-          <p className="text-slate-500 text-sm mt-1">Sign in to GC Admin</p>
+          <p className="text-slate-500 text-sm mt-1">Sign in to G.C. Print Shop</p>
         </div>
 
         <div className="bg-white rounded-xl border border-slate-200/80 shadow-sm p-8">
@@ -57,7 +57,7 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 transition-shadow focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500"
                 placeholder="admin@gc.local"
                 required
               />
@@ -71,7 +71,7 @@ export default function LoginPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 transition-shadow focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500"
                 placeholder="••••••••"
                 required
               />
@@ -80,15 +80,15 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none text-white font-medium text-sm py-2.5 rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.99]"
+              className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:pointer-events-none text-white font-medium text-sm py-2.5 rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.99]"
             >
-              {loading ? 'Signing in…' : 'Sign in'}
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-6">
-          Printing &amp; Retail Business Management System
+          G.C. Print Shop &mdash; Business Management System
         </p>
       </div>
     </div>

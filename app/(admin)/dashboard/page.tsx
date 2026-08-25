@@ -1,10 +1,18 @@
 import { Card } from '@/components/ui/card';
+import { ProductCard } from '@/components/ProductCard';
 import { getSalesReport, getRevenueReport, getInventoryReport } from '@/actions/reports';
+import { getProducts } from '@/actions/products';
+import { Package, Wallet } from 'lucide-react';
 
 async function DashboardPage() {
-  const salesReport = await getSalesReport();
-  const revenueReport = await getRevenueReport();
-  const inventoryReport = await getInventoryReport();
+  const [salesReport, revenueReport, inventoryReport, productsResponse] = await Promise.all([
+    getSalesReport(),
+    getRevenueReport(),
+    getInventoryReport(),
+    getProducts(1, 12, '', '', 'active'),
+  ]);
+
+  const products = productsResponse?.data?.data || [];
 
   return (
     <div className="space-y-6">
@@ -16,7 +24,7 @@ async function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600">
+            <div className="text-3xl font-bold text-purple-600">
               {salesReport?.data?.totalSales || 0}
             </div>
             <p className="text-slate-600 text-sm">Today&apos;s Sales</p>
@@ -60,15 +68,29 @@ async function DashboardPage() {
 
         <Card title="Alerts">
           <div className="space-y-2">
-            <div className="p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800">
-              📦 {inventoryReport?.data?.lowStockCount || 0} items are low on stock
+            <div className="flex items-center gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800">
+              <Package className="w-4 h-4 shrink-0" />
+              {inventoryReport?.data?.lowStockCount || 0} items are low on stock
             </div>
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800">
-              💰 Check pending invoices for outstanding payments
+            <div className="flex items-center gap-2 p-3 bg-purple-50 border border-purple-200 rounded text-sm text-purple-800">
+              <Wallet className="w-4 h-4 shrink-0" />
+              Check pending invoices for outstanding payments
             </div>
           </div>
         </Card>
       </div>
+
+      <Card title="Products" subtitle="Stock availability at a glance">
+        {products.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            {products.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-slate-600 py-8">No products found</p>
+        )}
+      </Card>
     </div>
   );
 }

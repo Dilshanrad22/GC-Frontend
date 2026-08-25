@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card';
+﻿import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table } from '@/components/ui/table';
 import { getProducts, getCategories } from '@/actions/products';
@@ -7,14 +7,15 @@ import Link from 'next/link';
 async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { page?: string; search?: string; category?: string };
+  searchParams: { page?: string; search?: string; category?: string; status?: string };
 }) {
   const page = parseInt(searchParams.page || '1');
   const search = searchParams.search || '';
   const category = searchParams.category || '';
+  const status = searchParams.status ?? 'active';
 
   const [productsResponse, categoriesResponse] = await Promise.all([
-    getProducts(page, 10, search, category),
+    getProducts(page, 10, search, category, status),
     getCategories(),
   ]);
 
@@ -39,11 +40,11 @@ async function ProductsPage({
           <input
             type="text"
             placeholder="Search by name or SKU..."
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             defaultValue={search}
           />
           <select
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             defaultValue={category}
           >
             <option value="">All Categories</option>
@@ -58,13 +59,12 @@ async function ProductsPage({
         {products.length > 0 ? (
           <>
             <Table
-              headers={['SKU', 'Name', 'Category', 'Price', 'Stock', 'Status']}
+              headers={['Name', 'Category', 'Price', 'Stock', 'Status']}
               rows={products.map((product: any) => [
-                product.sku,
                 <Link
                   key={product.id}
                   href={`/products/${product.id}`}
-                  className="text-blue-600 hover:underline"
+                  className="text-purple-600 hover:underline"
                 >
                   {product.name}
                 </Link>,

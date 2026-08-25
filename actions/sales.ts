@@ -2,13 +2,27 @@
 
 import { apiGet, apiPost, apiPatch } from '@/lib/api';
 
-export async function getSales(page = 1, limit = 10, status = '', dateFrom = '', dateTo = '') {
+export async function getSales(
+  page = 1,
+  limit = 10,
+  status = '',
+  dateFrom = '',
+  dateTo = '',
+  customerId = '',
+  search = '',
+  paymentMethod = ''
+) {
   const params = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
     ...(status && { status }),
-    ...(dateFrom && { dateFrom }),
-    ...(dateTo && { dateTo }),
+    // Backend expects full ISO datetimes; date-only inputs (e.g. from
+    // <input type="date">) are widened to start/end of day.
+    ...(dateFrom && { startDate: new Date(`${dateFrom}T00:00:00.000Z`).toISOString() }),
+    ...(dateTo && { endDate: new Date(`${dateTo}T23:59:59.999Z`).toISOString() }),
+    ...(customerId && { customerId }),
+    ...(search && { search }),
+    ...(paymentMethod && { paymentMethod }),
   });
 
   return apiGet<any>(`/sales?${params}`);
