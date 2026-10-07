@@ -34,7 +34,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white/80 backdrop-blur-sm border-b border-slate-200 px-6 py-3.5 sticky top-0 z-30">
+    <nav className="print:hidden bg-white/80 backdrop-blur-sm border-b border-slate-200 px-6 py-3.5 sticky top-0 z-30">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold text-slate-900">Admin Panel</h2>
 

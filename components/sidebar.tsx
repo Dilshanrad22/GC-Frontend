@@ -6,9 +6,8 @@ import {
   LayoutDashboard,
   Users,
   Package,
-  ShoppingCart,
+  Receipt,
   ShoppingBag,
-  FileText,
   BarChart3,
   Settings as SettingsIcon,
   type LucideIcon,
@@ -19,8 +18,7 @@ const menuItems: { name: string; href: string; icon: LucideIcon }[] = [
   { name: 'Customers', href: '/customers', icon: Users },
   { name: 'Products', href: '/products', icon: Package },
   { name: 'Web Orders', href: '/orders', icon: ShoppingBag },
-  { name: 'Sales', href: '/sales', icon: ShoppingCart },
-  { name: 'Invoices', href: '/invoices', icon: FileText },
+  { name: 'Billing', href: '/sales', icon: Receipt },
   { name: 'Reports', href: '/reports', icon: BarChart3 },
   { name: 'Settings', href: '/settings', icon: SettingsIcon },
 ];
@@ -29,7 +27,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="bg-white border-r border-slate-200 w-64 min-h-screen flex flex-col">
+    <aside className="print:hidden bg-white border-r border-slate-200 w-64 min-h-screen flex flex-col">
       <div className="px-5 py-6 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-lg bg-linear-to-br from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">

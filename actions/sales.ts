@@ -10,7 +10,8 @@ export async function getSales(
   dateTo = '',
   customerId = '',
   search = '',
-  paymentMethod = ''
+  paymentMethod = '',
+  dueOnly = false
 ) {
   const params = new URLSearchParams({
     page: page.toString(),
@@ -23,6 +24,7 @@ export async function getSales(
     ...(customerId && { customerId }),
     ...(search && { search }),
     ...(paymentMethod && { paymentMethod }),
+    ...(dueOnly && { paymentStatus: 'due' }),
   });
 
   return apiGet<any>(`/sales?${params}`);
