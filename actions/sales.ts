@@ -37,10 +37,11 @@ export async function createSale(data: {
   items: Array<{
     productId: string;
     quantity: number;
-    price: number;
+    unitPrice: number;
     discount?: number;
   }>;
-  discountAmount?: number;
+  discount?: number;
+  tax?: number;
   paymentMethod: string;
   notes?: string;
 }) {

@@ -45,9 +45,13 @@ export async function adjustStock(
   type: 'increase' | 'decrease' | 'damaged' | 'customer_return',
   reason?: string
 ) {
+  // The backend names the manual adjustments adjustment_increase / adjustment_decrease.
+  const backendType =
+    type === 'increase' ? 'adjustment_increase' : type === 'decrease' ? 'adjustment_decrease' : type;
+
   return apiPost<any>(`/inventory/${productId}/adjust`, {
     quantity,
-    type,
+    type: backendType,
     reason,
   });
 }

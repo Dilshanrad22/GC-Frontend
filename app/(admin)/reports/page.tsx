@@ -12,9 +12,10 @@ import Link from 'next/link';
 async function ReportsPage({
   searchParams,
 }: {
-  searchParams: { view?: string };
+  searchParams: Promise<{ view?: string }>;
 }) {
-  const view = searchParams.view || 'sales';
+  const query = await searchParams;
+  const view = query.view || 'sales';
 
   let data;
   switch (view) {

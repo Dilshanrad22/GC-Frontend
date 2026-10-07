@@ -1,6 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { getReceipt } from '@/actions/sales';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { BillActions } from './BillActions';
 
 function formatMoney(value: number) {
@@ -32,7 +33,7 @@ export default async function BillDetailsPage({
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-900">Bill Details</h1>
-        <BillActions />
+        <BillActions bill={bill} />
       </div>
 
       <Card>
@@ -57,7 +58,16 @@ export default async function BillDetailsPage({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm mb-6 pb-6 border-b border-slate-100">
           <div>
             <p className="text-slate-400">Customer</p>
-            <p className="text-slate-900 font-medium">{bill.customer || 'Walk-in Customer'}</p>
+            {bill.customerId ? (
+              <Link
+                href={`/customers/${bill.customerId}`}
+                className="text-purple-600 font-medium hover:underline"
+              >
+                {bill.customer || 'View Customer'}
+              </Link>
+            ) : (
+              <p className="text-slate-900 font-medium">{bill.customer || 'Walk-in Customer'}</p>
+            )}
           </div>
           <div>
             <p className="text-slate-400">Phone</p>

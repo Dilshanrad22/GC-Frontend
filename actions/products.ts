@@ -1,13 +1,14 @@
 ﻿'use server';
 
-import { apiGet, apiPost, apiPatch, apiFormData } from '@/lib/api';
+import { apiGet, apiPost, apiPatch, apiDelete, apiFormData } from '@/lib/api';
 
 export async function getProducts(page = 1, limit = 10, search = '', category = '', status = '') {
   const params = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
     ...(search && { search }),
-    ...(category && { category }),
+    // The backend's query param is categoryId, not category.
+    ...(category && { categoryId: category }),
     ...(status && { status }),
   });
 
@@ -45,7 +46,11 @@ export async function uploadProductImage(id: string, formData: FormData) {
 }
 
 export async function deleteProductImage(productId: string, imageId: string) {
-  return apiPost<any>(`/products/${productId}/images/${imageId}/delete`, {});
+  return apiDelete<any>(`/products/${productId}/images/${imageId}`);
+}
+
+export async function setPrimaryProductImage(productId: string, imageId: string) {
+  return apiPatch<any>(`/products/${productId}/images/${imageId}/primary`, {});
 }
 
 export async function deactivateProduct(id: string) {

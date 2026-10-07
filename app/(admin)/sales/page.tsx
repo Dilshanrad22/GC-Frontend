@@ -8,9 +8,10 @@ import { Plus } from 'lucide-react';
 async function SalesPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const page = parseInt(searchParams.page || '1');
+  const query = await searchParams;
+  const page = parseInt(query.page || '1');
   const response = await getSales(page, 10);
   const sales = response?.data?.data || [];
   const pagination = response?.data?.pagination || {};

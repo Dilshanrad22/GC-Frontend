@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
+  Users,
   Package,
   ShoppingCart,
+  ShoppingBag,
   FileText,
   BarChart3,
   Settings as SettingsIcon,
@@ -14,7 +16,9 @@ import {
 
 const menuItems: { name: string; href: string; icon: LucideIcon }[] = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Customers', href: '/customers', icon: Users },
   { name: 'Products', href: '/products', icon: Package },
+  { name: 'Web Orders', href: '/orders', icon: ShoppingBag },
   { name: 'Sales', href: '/sales', icon: ShoppingCart },
   { name: 'Invoices', href: '/invoices', icon: FileText },
   { name: 'Reports', href: '/reports', icon: BarChart3 },

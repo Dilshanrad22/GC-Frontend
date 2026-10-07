@@ -87,10 +87,10 @@ export default function NewSalePage() {
         items: cart.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
-          price: item.price,
+          unitPrice: item.price,
           discount: item.discount,
         })),
-        discountAmount,
+        discount: discountAmount,
         paymentMethod,
       });
 

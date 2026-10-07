@@ -8,10 +8,11 @@ import { AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 async function InvoicesPage({
   searchParams,
 }: {
-  searchParams: { view?: string; page?: string };
+  searchParams: Promise<{ view?: string; page?: string }>;
 }) {
-  const view = searchParams.view || 'all';
-  const page = parseInt(searchParams.page || '1');
+  const query = await searchParams;
+  const view = query.view || 'all';
+  const page = parseInt(query.page || '1');
 
   let response;
   if (view === 'due') {
