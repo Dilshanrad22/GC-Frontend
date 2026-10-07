@@ -12,8 +12,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    // suppressHydrationWarning: some browser extensions (translators, grammar
+    // checkers, antivirus toolbars) tag <html>/<body> with their own
+    // attributes before React hydrates. That's a real DOM difference but not
+    // a bug in this app, so warning about it here is the React-sanctioned
+    // way to silence it without masking other, real hydration mismatches.
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

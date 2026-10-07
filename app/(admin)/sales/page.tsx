@@ -69,7 +69,7 @@ async function SalesPage({
                 >
                   {sale.invoiceNumber}
                 </Link>,
-                sale.customer?.name || 'Walk-in',
+                sale.customer?.name || sale.customerName || 'Walk-in',
                 `Rs.${sale.total}`,
                 sale._count?.items ?? sale.items?.length ?? 0,
                 new Date(sale.createdAt).toLocaleDateString(),

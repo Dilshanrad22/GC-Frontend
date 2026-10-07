@@ -98,7 +98,7 @@ async function DashboardPage() {
                   >
                     <span>
                       <span className="font-medium text-slate-900">{sale.invoiceNumber}</span>{' '}
-                      <span className="text-slate-500">— {sale.customer?.name || 'Walk-in'}</span>
+                      <span className="text-slate-500">— {sale.customer?.name || sale.customerName || 'Walk-in'}</span>
                     </span>
                     <span className="text-slate-700 font-medium">Rs.{sale.total}</span>
                   </Link>

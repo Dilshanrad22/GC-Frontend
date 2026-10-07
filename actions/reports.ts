@@ -16,6 +16,10 @@ export async function getSalesReport(
   return apiGet<any>(`/reports/sales?${params}`);
 }
 
+export async function getSalesTrend(period: 'daily' | 'weekly' | 'monthly' = 'daily') {
+  return apiGet<any>(`/reports/sales-trend?period=${period}`);
+}
+
 export async function getRevenueReport(
   dateFrom?: string,
   dateTo?: string,

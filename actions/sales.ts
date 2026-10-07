@@ -36,6 +36,7 @@ export async function getSale(id: string) {
 
 export async function createSale(data: {
   customerId?: string;
+  customerName?: string;
   items: Array<{
     productId: string;
     quantity: number;
