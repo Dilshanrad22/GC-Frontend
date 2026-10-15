@@ -3,14 +3,16 @@ import { Button } from '@/components/ui/button';
 import { Table } from '@/components/ui/table';
 import { getCustomers } from '@/actions/customers';
 import Link from 'next/link';
+import { Plus } from 'lucide-react';
 
 async function CustomersPage({
   searchParams,
 }: {
-  searchParams: { page?: string; search?: string };
+  searchParams: Promise<{ page?: string; search?: string }>;
 }) {
-  const page = parseInt(searchParams.page || '1');
-  const search = searchParams.search || '';
+  const { page: pageParam, search: searchParam } = await searchParams;
+  const page = parseInt(pageParam || '1');
+  const search = searchParam || '';
 
   const response = await getCustomers(page, 10, search);
   const customers = response?.data?.data || [];
@@ -24,19 +26,22 @@ async function CustomersPage({
           <p className="text-slate-600">Manage your customer database</p>
         </div>
         <Link href="/customers/new">
-          <Button>+ Add Customer</Button>
+          <Button>
+            <Plus className="w-4 h-4" /> Add Customer
+          </Button>
         </Link>
       </div>
 
       <Card>
-        <div className="mb-4">
+        <form action="/customers" method="get" className="mb-4">
           <input
             type="text"
-            placeholder="Search customers by name or email..."
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="search"
+            placeholder="Search customers by name, email, or phone..."
+            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             defaultValue={search}
           />
-        </div>
+        </form>
 
         {customers.length > 0 ? (
           <>
@@ -46,14 +51,14 @@ async function CustomersPage({
                 <Link
                   key={customer.id}
                   href={`/customers/${customer.id}`}
-                  className="text-blue-600 hover:underline"
+                  className="text-purple-600 hover:underline"
                 >
                   {customer.name}
                 </Link>,
-                customer.email,
+                customer.email || '-',
                 customer.phone,
-                customer.type,
-                customer.city || '-',
+                customer.customerType,
+                customer.cityDistrict || '-',
                 customer.isActive ? (
                   <span className="text-green-600 font-medium">Active</span>
                 ) : (
@@ -64,7 +69,7 @@ async function CustomersPage({
 
             <div className="mt-4 flex justify-center gap-2">
               {pagination.page > 1 && (
-                <Link href={`/customers?page=${page - 1}`}>
+                <Link href={`/customers?page=${page - 1}${search ? `&search=${search}` : ''}`}>
                   <Button variant="secondary" size="sm">
                     Previous
                   </Button>
@@ -74,7 +79,7 @@ async function CustomersPage({
                 Page {pagination.page} of {pagination.totalPages}
               </span>
               {pagination.page < pagination.totalPages && (
-                <Link href={`/customers?page=${page + 1}`}>
+                <Link href={`/customers?page=${page + 1}${search ? `&search=${search}` : ''}`}>
                   <Button variant="secondary" size="sm">
                     Next
                   </Button>

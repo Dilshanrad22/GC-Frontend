@@ -28,10 +28,25 @@ async function apiCall<T>(
     (headers as any)['Authorization'] = `Bearer ${token}`;
   }
 
-  let response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers,
+      cache: 'no-store',
+    });
+  } catch (error) {
+    // Backend unreachable (down, restarting, network hiccup) — fail into the
+    // same envelope callers already check `success` on, instead of throwing
+    // and crashing whatever page triggered this request.
+    return {
+      success: false,
+      error: {
+        code: 'FETCH_ERROR',
+        message: error instanceof Error ? error.message : 'Failed to reach the server',
+      },
+    };
+  }
 
   if (response.status === 401 && token) {
     const refreshToken = cookieStore.get('refreshToken')?.value;
@@ -57,14 +72,30 @@ async function apiCall<T>(
           response = await fetch(`${API_URL}${endpoint}`, {
             ...options,
             headers,
+            cache: 'no-store',
           });
         }
       }
     }
   }
 
-  const data = await response.json();
-  return data;
+  return parseApiResponse<T>(response);
+}
+
+async function parseApiResponse<T>(response: Response): Promise<ApiResponse<T>> {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    return {
+      success: false,
+      error: {
+        code: 'UNEXPECTED_RESPONSE',
+        message: `Expected JSON from the server but got "${contentType || 'unknown content-type'}" (status ${response.status})`,
+        details: text.slice(0, 200),
+      },
+    };
+  }
+  return response.json();
 }
 
 export async function apiGet<T>(endpoint: string): Promise<ApiResponse<T>> {
@@ -114,6 +145,5 @@ export async function apiFormData<T>(
     body: formData,
   });
 
-  const data = await response.json();
-  return data;
+  return parseApiResponse<T>(response);
 }

@@ -1,6 +1,7 @@
-'use server';
+﻿'use server';
 
-import { cookies, redirect } from 'next/headers';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { apiPost } from '@/lib/api';
 
 export async function loginAction(email: string, password: string) {
@@ -49,6 +50,7 @@ export async function loginAction(email: string, password: string) {
 
     return { success: true, user: response.data.user };
   } catch (error) {
+    console.error('loginAction failed:', error);
     return {
       success: false,
       error: 'An unexpected error occurred',
@@ -69,7 +71,7 @@ export async function changePasswordAction(
   newPassword: string
 ) {
   try {
-    const response = await apiPost('/auth/change-password', {
+    const response = await apiPost<any>('/auth/change-password', {
       currentPassword,
       newPassword,
     });
@@ -83,6 +85,7 @@ export async function changePasswordAction(
 
     return { success: true };
   } catch (error) {
+    console.error('changePasswordAction failed:', error);
     return {
       success: false,
       error: 'An unexpected error occurred',
