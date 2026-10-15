@@ -1,6 +1,7 @@
 ﻿import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function SettingsPage() {
   return (
@@ -37,6 +38,16 @@ export default function SettingsPage() {
             <Input label="Phone" placeholder="Business phone" />
             <Button>Save Business Info</Button>
           </form>
+        </Card>
+
+        <Card title="Appearance">
+          <div className="flex justify-between items-center p-3 bg-slate-50 rounded">
+            <div>
+              <p className="text-sm font-medium text-slate-900">Dark Mode</p>
+              <p className="text-xs text-slate-500">Easier on the eyes in low light</p>
+            </div>
+            <ThemeToggle />
+          </div>
         </Card>
 
         <Card title="System Settings">

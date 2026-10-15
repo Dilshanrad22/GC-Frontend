@@ -30,9 +30,7 @@ export function Sidebar() {
     <aside className="print:hidden bg-white border-r border-slate-200 w-64 min-h-screen flex flex-col">
       <div className="px-5 py-6 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg bg-linear-to-br from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-            GC
-          </div>
+          <img src="/logo.png" alt="G.C. Print Shop" className="w-9 h-9 object-contain shrink-0" />
           <div>
             <h1 className="text-sm font-semibold text-slate-900 leading-tight">
               G.C. Print Shop

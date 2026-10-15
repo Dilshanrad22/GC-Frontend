@@ -33,10 +33,14 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        <img
+          src="/banner.jpg"
+          alt="G.C. Print Shop"
+          className="w-full rounded-xl shadow-sm mb-6 object-cover"
+        />
+
         <div className="text-center mb-6">
-          <div className="w-11 h-11 rounded-xl bg-linear-to-br from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-base shadow-sm mx-auto mb-4">
-            GC
-          </div>
+          <img src="/logo.png" alt="G.C. Print Shop" className="w-11 h-11 object-contain mx-auto mb-4" />
           <h1 className="text-xl font-semibold text-slate-900">Welcome back</h1>
           <p className="text-slate-500 text-sm mt-1">Sign in to G.C. Print Shop</p>
         </div>

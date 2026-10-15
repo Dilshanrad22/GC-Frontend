@@ -22,5 +22,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  // Also excludes image files served straight out of /public (logo, banner,
+  // icon) — without this, those requests had no accessToken cookie either
+  // and got redirected to /login, breaking the branding on /login itself.
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico)$).*)'],
 };
