@@ -57,12 +57,12 @@ export async function voidSale(id: string, reason: string) {
 
 export async function returnSaleItem(
   saleId: string,
-  itemId: string,
+  productId: string,
   quantity: number,
   reason: string
 ) {
   return apiPost<any>(`/sales/${saleId}/return`, {
-    itemId,
+    productId,
     quantity,
     reason,
   });

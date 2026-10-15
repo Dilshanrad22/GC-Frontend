@@ -61,14 +61,31 @@ export async function getCategories() {
   return apiGet<any>('/categories');
 }
 
+export async function getCategory(id: string) {
+  return apiGet<any>(`/categories/${id}`);
+}
+
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
 export async function createCategory(data: {
   name: string;
   description?: string;
   parentId?: string;
 }) {
-  return apiPost<any>('/categories', data);
+  return apiPost<any>('/categories', { ...data, slug: slugify(data.name) });
 }
 
 export async function updateCategory(id: string, data: any) {
   return apiPatch<any>(`/categories/${id}`, data);
+}
+
+export async function deactivateCategory(id: string) {
+  return apiPatch<any>(`/categories/${id}/deactivate`, {});
 }

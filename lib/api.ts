@@ -57,15 +57,23 @@ async function apiCall<T>(
         body: JSON.stringify({ refreshToken }),
       });
 
+      let refreshed = false;
       if (refreshResponse.ok) {
         const refreshData = await refreshResponse.json();
         if (refreshData.success) {
+          refreshed = true;
           const newCookies = await cookies();
           newCookies.set('accessToken', refreshData.data.accessToken, {
             httpOnly: true,
             secure: true,
             sameSite: 'lax',
             maxAge: 900,
+          });
+          newCookies.set('refreshToken', refreshData.data.refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'lax',
+            maxAge: 604800,
           });
 
           (headers as any)['Authorization'] = `Bearer ${refreshData.data.accessToken}`;
@@ -74,6 +82,22 @@ async function apiCall<T>(
             headers,
             cache: 'no-store',
           });
+        }
+      }
+
+      if (!refreshed) {
+        // Refresh token is invalid/expired/revoked — the session is dead.
+        // Clear the auth cookies so the next navigation gets redirected to
+        // /login by proxy.ts, instead of silently sitting on stale cookies
+        // while every request 401s.
+        try {
+          const deadCookies = await cookies();
+          deadCookies.delete('accessToken');
+          deadCookies.delete('refreshToken');
+          deadCookies.delete('user');
+        } catch {
+          // Can't mutate cookies outside a Server Action/Route Handler —
+          // the caller still gets the 401 envelope either way.
         }
       }
     }

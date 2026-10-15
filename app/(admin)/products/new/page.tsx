@@ -24,6 +24,7 @@ const UNIT_OPTIONS = [
 export default function NewProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [categories, setCategories] = useState<any[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
@@ -51,6 +52,7 @@ export default function NewProductPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     try {
       const result = await createProduct({
@@ -69,12 +71,22 @@ export default function NewProductPage() {
         if (imageFile) {
           const imageFormData = new FormData();
           imageFormData.append('image', imageFile);
-          await uploadProductImage(result.data.id, imageFormData);
+          const imageResult = await uploadProductImage(result.data.id, imageFormData);
+          if (!imageResult?.success) {
+            // The product itself was created fine; only the image failed.
+            // Don't block navigation over it, but say so.
+            setError(
+              `Product created, but the image failed to upload: ${imageResult?.error?.message || 'unknown error'}`
+            );
+            return;
+          }
         }
         router.push('/products');
+      } else {
+        setError(result.error?.message || 'Failed to create product');
       }
     } catch (error) {
-      console.error('Failed to create product');
+      setError('Failed to create product');
     } finally {
       setLoading(false);
     }
@@ -86,6 +98,12 @@ export default function NewProductPage() {
 
       <Card>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+              {error}
+            </p>
+          )}
+
           <Input
             label="Product Name"
             placeholder="Product name"

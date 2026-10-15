@@ -43,3 +43,6 @@ coverage/
 
 # Testing
 .jest-cache/
+
+# TypeScript build cache
+*.tsbuildinfo

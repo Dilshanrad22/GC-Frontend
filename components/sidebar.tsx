@@ -1,11 +1,13 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   Users,
   Package,
+  Boxes,
   Receipt,
   ShoppingBag,
   BarChart3,
@@ -13,10 +15,11 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-const menuItems: { name: string; href: string; icon: LucideIcon }[] = [
+const menuItems: { name: string; href: string; icon: LucideIcon; adminOnly?: boolean }[] = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Customers', href: '/customers', icon: Users },
-  { name: 'Products', href: '/products', icon: Package },
+  { name: 'Customers', href: '/customers', icon: Users, adminOnly: true },
+  { name: 'Products', href: '/products', icon: Package, adminOnly: true },
+  { name: 'Inventory', href: '/inventory', icon: Boxes },
   { name: 'Web Orders', href: '/orders', icon: ShoppingBag },
   { name: 'Billing', href: '/sales', icon: Receipt },
   { name: 'Reports', href: '/reports', icon: BarChart3 },
@@ -25,6 +28,27 @@ const menuItems: { name: string; href: string; icon: LucideIcon }[] = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const userCookie = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('user='));
+    if (userCookie) {
+      try {
+        const user = JSON.parse(decodeURIComponent(userCookie.substring(5)));
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setRole(user?.role?.name ?? null);
+      } catch (e) {
+        console.error('Failed to parse user cookie');
+      }
+    }
+  }, []);
+
+  // Before the cookie is read (first render), show every item rather than
+  // guessing — this only flashes admin-only items for a staff user for a
+  // moment; the backend still enforces the real restriction either way.
+  const visibleItems = menuItems.filter((item) => !item.adminOnly || role === null || role === 'admin');
 
   return (
     <aside className="print:hidden bg-white border-r border-slate-200 w-64 min-h-screen flex flex-col">
@@ -41,7 +65,7 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-        {menuItems.map((item) => {
+        {visibleItems.map((item) => {
           const isActive = pathname.startsWith(item.href);
           const Icon = item.icon;
           return (

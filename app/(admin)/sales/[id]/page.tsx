@@ -33,7 +33,7 @@ export default async function BillDetailsPage({
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-900">Bill Details</h1>
-        <BillActions bill={bill} />
+        <BillActions bill={bill} saleId={id} />
       </div>
 
       <Card>

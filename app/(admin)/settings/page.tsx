@@ -1,9 +1,19 @@
 ﻿import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { getProfile } from '@/actions/auth';
+import { getBusinessSettings } from '@/actions/settings';
+import { isAdmin } from '@/lib/currentUser';
+import { ProfileForm } from './ProfileForm';
+import { ChangePasswordForm } from './ChangePasswordForm';
+import { BusinessInfoForm } from './BusinessInfoForm';
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const [profileResponse, admin] = await Promise.all([getProfile(), isAdmin()]);
+  const businessResponse = admin ? await getBusinessSettings() : null;
+
+  const profile = profileResponse?.data;
+  const businessSettings = businessResponse?.data;
+
   return (
     <div className="space-y-6">
       <div>
@@ -13,32 +23,26 @@ export default function SettingsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card title="Profile Settings">
-          <form className="space-y-4">
-            <Input label="Full Name" placeholder="Your full name" />
-            <Input label="Email" type="email" placeholder="your@email.com" />
-            <Input label="Phone" placeholder="Your phone number" />
-            <Button>Save Profile</Button>
-          </form>
+          {profile ? (
+            <ProfileForm user={profile} />
+          ) : (
+            <p className="text-sm text-red-600">Could not load your profile.</p>
+          )}
         </Card>
 
         <Card title="Change Password">
-          <form className="space-y-4">
-            <Input label="Current Password" type="password" />
-            <Input label="New Password" type="password" />
-            <Input label="Confirm Password" type="password" />
-            <Button>Update Password</Button>
-          </form>
+          <ChangePasswordForm />
         </Card>
 
-        <Card title="Business Information">
-          <form className="space-y-4">
-            <Input label="Business Name" placeholder="GC Printing & Retail" />
-            <Input label="Registration Number" placeholder="Reg. No." />
-            <Input label="Address" placeholder="Business address" />
-            <Input label="Phone" placeholder="Business phone" />
-            <Button>Save Business Info</Button>
-          </form>
-        </Card>
+        {admin && (
+          <Card title="Business Information" subtitle="Shown on printed bills and reports">
+            {businessSettings ? (
+              <BusinessInfoForm settings={businessSettings} />
+            ) : (
+              <p className="text-sm text-red-600">Could not load business information.</p>
+            )}
+          </Card>
+        )}
 
         <Card title="Appearance">
           <div className="flex justify-between items-center p-3 bg-slate-50 rounded">
@@ -64,9 +68,6 @@ export default function SettingsPage() {
                 {process.env.NODE_ENV}
               </span>
             </div>
-            <p className="text-xs text-slate-500">
-              Version: 3.0.0
-            </p>
           </div>
         </Card>
       </div>

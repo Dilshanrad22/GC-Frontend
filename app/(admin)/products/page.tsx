@@ -31,9 +31,14 @@ async function ProductsPage({
           <h1 className="text-3xl font-bold text-slate-900">Products</h1>
           <p className="text-slate-600">Manage your product catalog</p>
         </div>
-        <Link href="/products/new">
-          <Button>+ Add Product</Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/products/categories">
+            <Button variant="secondary">Manage Categories</Button>
+          </Link>
+          <Link href="/products/new">
+            <Button>+ Add Product</Button>
+          </Link>
+        </div>
       </div>
 
       <Card>
